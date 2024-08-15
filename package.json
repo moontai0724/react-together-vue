@@ -7,10 +7,33 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint:eslint": "eslint --fix --cache-location node_modules/.cache/eslint .",
+    "lint:prettier": "prettier --write --ignore-unknown .",
+    "prepare": "husky || true"
+  },
+  "lint-staged": {
+    "*.{ts,js,vue}": "eslint --cache --cache-location node_modules/.cache/eslint",
+    "*.**": "prettier --check --ignore-unknown"
   },
   "dependencies": {
     "nuxt": "^3.12.4",
     "vue": "latest"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "eslint-plugin-typescript-sort-keys": "^3.2.0",
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "typescript": "<5.4.0"
   }
 }

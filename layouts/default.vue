@@ -1,6 +1,8 @@
 <template>
   <!-- You can add common layout elements here, such as header or footer -->
-  <slot />
+  <div>
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts">
