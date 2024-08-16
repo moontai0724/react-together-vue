@@ -18,13 +18,17 @@
     "*.**": "prettier --check --ignore-unknown"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.4",
     "nuxt": "^3.12.4",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.0.4",
     "vue": "latest"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@primevue/nuxt-module": "^4.0.4",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.10.0",
     "eslint-import-resolver-typescript": "^3.6.1",

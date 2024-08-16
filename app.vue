@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// Any app-wide setup can go here
+import "primeicons/primeicons.css";
 </script>
 
 <style>
