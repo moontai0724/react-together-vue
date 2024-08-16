@@ -4,12 +4,19 @@ import Aura from "@primevue/themes/aura";
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  modules: ["@primevue/nuxt-module"],
+  modules: ["@primevue/nuxt-module", "@pinia/nuxt"],
   primevue: {
     options: {
       theme: {
         preset: Aura,
       },
+    },
+  },
+  runtimeConfig: {
+    public: {
+      keycloakUrl: process.env.NUXT_PUBLIC_KEYCLOAK_URL,
+      keycloakRealm: process.env.NUXT_PUBLIC_KEYCLOAK_REALM,
+      keycloakClientId: process.env.NUXT_PUBLIC_KEYCLOAK_CLIENT_ID,
     },
   },
 });

@@ -18,7 +18,9 @@
     "*.**": "prettier --check --ignore-unknown"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.3",
     "@primevue/themes": "^4.0.4",
+    "keycloak-js": "^25.0.2",
     "nuxt": "^3.12.4",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.4",
