@@ -9,11 +9,11 @@ import "primeicons/primeicons.css";
 
 import { useKeycloak } from "~/composables/useKeycloak";
 
-const { initKeycloak } = useKeycloak();
+const { checkAuthAndRedirect } = useKeycloak();
 
-// Initialize Keycloak when the app starts
+// Check authentication when the app starts
 onMounted(() => {
-  initKeycloak();
+  checkAuthAndRedirect();
 });
 </script>
 
