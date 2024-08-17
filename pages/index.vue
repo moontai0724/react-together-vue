@@ -1,6 +1,13 @@
 <template>
   <div class="flex min-h-screen flex-col items-center justify-center">
-    <div class="rounded-lg bg-white p-8 text-center text-gray-800 shadow-md">
+    <div v-if="isLoading" class="text-center">
+      <ProgressSpinner />
+      <p class="mt-4 text-gray-600">Loading...</p>
+    </div>
+    <div
+      v-else
+      class="rounded-lg bg-white p-8 text-center text-gray-800 shadow-md"
+    >
       <h1 class="mb-6 text-3xl font-bold text-indigo-600">Welcome</h1>
       <div v-if="isAuthenticated" class="space-y-4">
         <p class="text-xl">
@@ -26,14 +33,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 import { useKeycloak } from "~/composables/useKeycloak";
 
 const { isAuthenticated, userProfile, login, logout, initKeycloak } =
   useKeycloak();
 
+const isLoading = ref(true);
+
 onMounted(async () => {
   await initKeycloak();
+  isLoading.value = false;
 });
 </script>
