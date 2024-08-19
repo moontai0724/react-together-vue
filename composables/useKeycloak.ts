@@ -4,7 +4,7 @@ import { useKeycloakStore } from "~/stores/keycloak";
 
 export function useKeycloak() {
   const keycloakStore = useKeycloakStore();
-  const { isAuthenticated, userProfile } = storeToRefs(keycloakStore);
+  const { isAuthenticated, userProfile, keycloak } = storeToRefs(keycloakStore);
   const { login, logout, initKeycloak } = keycloakStore;
 
   const checkAuthAndRedirect = async () => {
@@ -13,7 +13,7 @@ export function useKeycloak() {
   };
 
   return {
-    keycloak: keycloakStore.keycloak,
+    keycloak,
     isAuthenticated,
     userProfile,
     login,

@@ -41,7 +41,7 @@ const fetchPhotos = async () => {
 
   isLoading.value = true;
   try {
-    const token = keycloak?.token;
+    const token = keycloak.value?.token;
     if (!token) {
       console.error("No access token available");
       return;
