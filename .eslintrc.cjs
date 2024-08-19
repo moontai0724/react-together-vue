@@ -19,7 +19,7 @@ module.exports = {
   rules: {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "typescript-sort-keys/interface": "error",
+    "typescript-sort-keys/interface": "off",
     "typescript-sort-keys/string-enum": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
