@@ -13,11 +13,12 @@
     <div v-if="!hasMorePages" class="mt-8 text-center text-gray-600">
       No more photos to load.
     </div>
+    <div ref="loadMoreTrigger" class="h-1 w-full"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 
 import PhotoCard from "~/components/PhotoCard.vue";
 import { useKeycloak } from "~/composables/useKeycloak";
@@ -36,6 +37,26 @@ const hasMorePages = ref(true);
 
 const { keycloak } = useKeycloak();
 
+const loadMoreTrigger = ref<HTMLElement | null>(null);
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    console.log(entries);
+    if (entries[0].isIntersecting && !isLoading.value) {
+      fetchPhotos();
+    }
+  },
+  { threshold: 0.1 },
+);
+
+const observeLoadMoreTrigger = () => {
+  if (loadMoreTrigger.value) {
+    observer.observe(loadMoreTrigger.value);
+  }
+
+  return observer;
+};
+
 const fetchPhotos = async () => {
   if (isLoading.value || !hasMorePages.value) return;
 
@@ -47,15 +68,14 @@ const fetchPhotos = async () => {
       return;
     }
 
-    const response = await fetch(
-      `https://react-together-api.cophr.net/photos?page=${page.value}&limit=20`,
+    const { data, pagination } = await fetch(
+      `https://react-together-api.cophr.net/photos?page=${page.value}&size=1`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       },
-    );
-    const { data, pagination } = (await response.json()) as Context;
+    ).then((res) => res.json() as Promise<Context>);
 
     if (!data || !Array.isArray(data)) {
       console.error("Unexpected API response format");
@@ -65,6 +85,11 @@ const fetchPhotos = async () => {
     photos.value.push(...data);
     page.value++;
     hasMorePages.value = page.value <= pagination.last;
+
+    // Check if we need to load more photos immediately
+    if (hasMorePages.value && isLoadMoreTriggerVisible()) {
+      setTimeout(fetchPhotos, 100); // Small delay to allow DOM update
+    }
   } catch (error) {
     console.error("Error fetching photos:", error);
   } finally {
@@ -72,20 +97,25 @@ const fetchPhotos = async () => {
   }
 };
 
-const handleScroll = () => {
-  const bottomOfWindow =
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-  if (!bottomOfWindow) return;
-
-  fetchPhotos();
+const isLoadMoreTriggerVisible = () => {
+  if (!loadMoreTrigger.value) return false;
+  const rect = loadMoreTrigger.value.getBoundingClientRect();
+  return rect.top <= window.innerHeight;
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
+  const observer = observeLoadMoreTrigger();
   fetchPhotos();
+
+  onUnmounted(() => {
+    observer.disconnect();
+  });
 });
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
+// Watch for changes in the photos array
+watch(photos, () => {
+  if (hasMorePages.value && isLoadMoreTriggerVisible()) {
+    fetchPhotos();
+  }
 });
 </script>
