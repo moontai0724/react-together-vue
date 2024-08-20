@@ -21,21 +21,13 @@
 import { onMounted, onUnmounted, ref, watch } from "vue";
 
 import PhotoCard from "~/components/PhotoCard.vue";
-import { useKeycloak } from "~/composables/useKeycloak";
-import type { PaginationStat } from "~/types/api/pagination-stat";
+import api from "~/services/api";
 import type { Photo } from "~/types/api/photo";
-
-interface Context {
-  data: Photo[];
-  pagination: PaginationStat;
-}
 
 const photos = ref<Photo[]>([]);
 const page = ref(1);
 const isLoading = ref(false);
 const hasMorePages = ref(true);
-
-const { keycloak } = useKeycloak();
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
 
@@ -62,20 +54,10 @@ const fetchPhotos = async () => {
 
   isLoading.value = true;
   try {
-    const token = keycloak.value?.token;
-    if (!token) {
-      console.error("No access token available");
-      return;
-    }
-
-    const { data, pagination } = await fetch(
-      `https://react-together-api.cophr.net/photos?page=${page.value}&size=1`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    ).then((res) => res.json() as Promise<Context>);
+    const { data, pagination } = await api.photos.list({
+      page: page.value,
+      size: 1,
+    });
 
     if (!data || !Array.isArray(data)) {
       console.error("Unexpected API response format");

@@ -1,5 +1,4 @@
 import { storeToRefs } from "pinia";
-
 import { useKeycloakStore } from "~/stores/keycloak";
 
 export function useKeycloak() {

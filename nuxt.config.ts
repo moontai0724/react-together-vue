@@ -30,6 +30,7 @@ export default defineNuxtConfig({
       keycloakUrl: process.env.NUXT_PUBLIC_KEYCLOAK_URL,
       keycloakRealm: process.env.NUXT_PUBLIC_KEYCLOAK_REALM,
       keycloakClientId: process.env.NUXT_PUBLIC_KEYCLOAK_CLIENT_ID,
+      apiUrl: process.env.NUXT_PUBLIC_API_URL,
     },
   },
 });
