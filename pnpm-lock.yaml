@@ -55,9 +55,6 @@ devDependencies:
   eslint-plugin-import:
     specifier: ^2.29.1
     version: 2.29.1(@typescript-eslint/parser@7.18.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
-  eslint-plugin-simple-import-sort:
-    specifier: ^12.0.0
-    version: 12.1.1(eslint@8.57.0)
   eslint-plugin-typescript-sort-keys:
     specifier: ^3.2.0
     version: 3.2.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.0)(typescript@5.3.3)
@@ -4372,14 +4369,6 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-    dependencies:
-      eslint: 8.57.0
-    dev: true
-
-  /eslint-plugin-simple-import-sort@12.1.1(eslint@8.57.0):
-    resolution: {integrity: sha512-6nuzu4xwQtE3332Uz0to+TxDQYRLTKRESSc2hefVT48Zc8JthmN23Gx9lnYhu0FtkRSL1oxny3kJ2aveVhmOVA==}
-    peerDependencies:
-      eslint: '>=5.0.0'
     dependencies:
       eslint: 8.57.0
     dev: true

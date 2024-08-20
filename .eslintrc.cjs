@@ -8,23 +8,17 @@ module.exports = {
     "@nuxtjs/eslint-config-typescript",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    "plugin:typescript-sort-keys/recommended",
     "prettier",
   ],
-  plugins: ["simple-import-sort", "typescript-sort-keys"],
+  plugins: ["import", "typescript-sort-keys"],
   settings: {
     "import/resolver": {
-      typescript: {},
+      typescript: true,
+      node: true,
     },
   },
   rules: {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
     "typescript-sort-keys/interface": "off",
-    "typescript-sort-keys/string-enum": "error",
-    "import/first": "error",
-    "import/newline-after-import": "error",
-    "import/no-duplicates": "error",
-    "import/no-unresolved": "error",
-    "import/prefer-default-export": "off",
   },
 };
